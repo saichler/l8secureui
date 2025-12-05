@@ -50,13 +50,40 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+.title-with-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.title-icon {
+    width: 28px;
+    height: 28px;
+    color: rgba(255, 255, 255, 0.9);
+    animation: iconPulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+}
+
+@keyframes iconPulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+    }
+    50% {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.7));
+    }
+}
+
 .app-title {
     color: white;
     font-size: 22px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 8px;
+    margin-bottom: 0;
 }
 
 .app-description {
@@ -128,6 +155,31 @@ body {
     color: #4a5568;
     cursor: pointer;
     user-select: none;
+}
+
+/* Register Link */
+.register-link {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.register-link span {
+    font-size: 12px;
+    color: #718096;
+}
+
+.register-link a {
+    color: #0ea5e9;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 4px;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
 }
 
 /* Login Button */

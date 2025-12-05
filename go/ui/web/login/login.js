@@ -24,6 +24,11 @@ function applyConfiguration() {
     if (!LOGIN_CONFIG.showRememberMe) {
         rememberMeSection.style.display = 'none';
     }
+
+    const registerLink = document.querySelector('.register-link');
+    if (registerLink && !LOGIN_CONFIG.showRegister) {
+        registerLink.style.display = 'none';
+    }
 }
 
 // Setup event listeners

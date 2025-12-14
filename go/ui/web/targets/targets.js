@@ -7,6 +7,7 @@ let credentials = {};
 // State management
 let pendingDelete = null;
 let tempHosts = [];
+let selectedInventoryType = 0;
 
 // Table instance
 let targetsTable = null;
@@ -22,6 +23,17 @@ const PROTOCOLS = {
     6: 'GRPC',
     7: 'Kubectl',
     8: 'GraphQL'
+};
+
+// Inventory type enum mapping (L8PTargetType)
+const INVENTORY_TYPES = {
+    0: 'Network Device',
+    1: 'GPUS',
+    2: 'Hosts',
+    3: 'Virtual Machine',
+    4: 'K8s Cluster',
+    5: 'Storage',
+    6: 'Power'
 };
 
 // Authentication token
@@ -60,6 +72,9 @@ async function getApiErrorMessage(response, defaultMessage) {
 document.addEventListener('DOMContentLoaded', async () => {
     await loadConfig();
 
+    // Initialize inventory type dropdown
+    initInventoryTypeFilter();
+
     // Initialize the table
     initTargetsTable();
 
@@ -73,6 +88,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+// Initialize inventory type dropdown with enum values
+function initInventoryTypeFilter() {
+    const select = document.getElementById('inventory-type-filter');
+    if (!select) return;
+
+    select.innerHTML = '';
+    for (const [value, label] of Object.entries(INVENTORY_TYPES)) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = label;
+        if (parseInt(value, 10) === selectedInventoryType) {
+            option.selected = true;
+        }
+        select.appendChild(option);
+    }
+}
+
+// Handle inventory type filter change
+function onInventoryTypeChange(value) {
+    selectedInventoryType = parseInt(value, 10);
+    // Update empty message for new inventory type
+    if (targetsTable) {
+        targetsTable.emptyMessage = getEmptyMessage();
+        targetsTable.currentPage = 1;
+    }
+    fetchTargets(1, targetsTable ? targetsTable.pageSize : 20);
+}
+
+// Get empty message based on selected inventory type
+function getEmptyMessage() {
+    const typeName = INVENTORY_TYPES[selectedInventoryType] || 'targets';
+    return `No ${typeName} found. Click "Add Target" to create one.`;
+}
+
 // Initialize the targets table with server-side pagination
 function initTargetsTable() {
     targetsTable = new L8Table({
@@ -80,7 +129,7 @@ function initTargetsTable() {
         tableId: 'targets-table',
         pageSize: 20,
         pageSizeOptions: [10, 20, 50, 100],
-        emptyMessage: 'No targets found. Click "Add Target" to create one.',
+        emptyMessage: getEmptyMessage(),
         serverSide: true,
         onPageChange: handlePageChange,
         columns: [
@@ -135,7 +184,7 @@ async function fetchTargets(page, pageSize) {
     const pageIndex = page - 1;
 
     try {
-        const query = `select * from L8PTarget limit ${pageSize} page ${pageIndex}`;
+        const query = `select * from L8PTarget where inventoryType=${selectedInventoryType} limit ${pageSize} page ${pageIndex}`;
         const body = encodeURIComponent(JSON.stringify({ text: query }));
         const response = await fetch(getTargetsEndpoint() + '?body=' + body, {
             method: 'GET',

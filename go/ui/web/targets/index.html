@@ -10,6 +10,14 @@
 <body>
     <div class="container">
         <section id="targets" class="content-section">
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label for="inventory-type-filter">Inventory Type:</label>
+                    <select id="inventory-type-filter" onchange="onInventoryTypeChange(this.value)">
+                        <!-- Options populated by JS -->
+                    </select>
+                </div>
+            </div>
             <div id="targets-table-container"></div>
         </section>
     </div>

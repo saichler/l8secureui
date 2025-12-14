@@ -50,6 +50,10 @@ func startWebServer(port int, cert string) {
 		}
 	}
 	ts.Post(object.New(nil, devices), nic)
+
+	cluster := creates.CreateCluster("lab")
+	ts.Post(object.New(nil, cluster), nic)
+
 	//Activate the webpoints topo_service
 	sla := ifs.NewServiceLevelAgreement(&server.WebService{}, ifs.WebService, 0, false, nil)
 	sla.SetArgs(svr)

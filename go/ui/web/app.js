@@ -46,6 +46,16 @@ function updateIframeTokens() {
     if (rolesIframe && rolesIframe.contentWindow && rolesIframe.contentWindow.RolesApp) {
         rolesIframe.contentWindow.RolesApp.setBearerToken(bearerToken);
     }
+
+    const credentialsIframe = document.getElementById('credentials-iframe');
+    if (credentialsIframe && credentialsIframe.contentWindow && credentialsIframe.contentWindow.CredentialsApp) {
+        credentialsIframe.contentWindow.CredentialsApp.setBearerToken(bearerToken);
+    }
+
+    const targetsIframe = document.getElementById('targets-iframe');
+    if (targetsIframe && targetsIframe.contentWindow && targetsIframe.contentWindow.TargetsApp) {
+        targetsIframe.contentWindow.TargetsApp.setBearerToken(bearerToken);
+    }
 }
 
 // Initialize the application
@@ -79,6 +89,7 @@ function initTabs() {
 function setupIframeHandlers() {
     const usersIframe = document.getElementById('users-iframe');
     const rolesIframe = document.getElementById('roles-iframe');
+    const credentialsIframe = document.getElementById('credentials-iframe');
 
     if (usersIframe) {
         usersIframe.addEventListener('load', function() {
@@ -96,6 +107,25 @@ function setupIframeHandlers() {
                 rolesIframe.contentWindow.RolesApp.refreshData();
                 // Set callback for when roles change
                 rolesIframe.contentWindow.RolesApp.setOnRolesChanged(onRolesChanged);
+            }
+        });
+    }
+
+    if (credentialsIframe) {
+        credentialsIframe.addEventListener('load', function() {
+            if (bearerToken && credentialsIframe.contentWindow && credentialsIframe.contentWindow.CredentialsApp) {
+                credentialsIframe.contentWindow.CredentialsApp.setBearerToken(bearerToken);
+                credentialsIframe.contentWindow.CredentialsApp.refreshData();
+            }
+        });
+    }
+
+    const targetsIframe = document.getElementById('targets-iframe');
+    if (targetsIframe) {
+        targetsIframe.addEventListener('load', function() {
+            if (bearerToken && targetsIframe.contentWindow && targetsIframe.contentWindow.TargetsApp) {
+                targetsIframe.contentWindow.TargetsApp.setBearerToken(bearerToken);
+                targetsIframe.contentWindow.TargetsApp.refreshData();
             }
         });
     }
@@ -119,6 +149,16 @@ function refreshAllData() {
     const rolesIframe = document.getElementById('roles-iframe');
     if (rolesIframe && rolesIframe.contentWindow && rolesIframe.contentWindow.RolesApp) {
         rolesIframe.contentWindow.RolesApp.refreshData();
+    }
+
+    const credentialsIframe = document.getElementById('credentials-iframe');
+    if (credentialsIframe && credentialsIframe.contentWindow && credentialsIframe.contentWindow.CredentialsApp) {
+        credentialsIframe.contentWindow.CredentialsApp.refreshData();
+    }
+
+    const targetsIframe = document.getElementById('targets-iframe');
+    if (targetsIframe && targetsIframe.contentWindow && targetsIframe.contentWindow.TargetsApp) {
+        targetsIframe.contentWindow.TargetsApp.refreshData();
     }
 }
 

@@ -10,9 +10,11 @@
         "tfaEnabled": true
     },
     "api": {
-        "prefix": "/test",
+        "prefix": "/probler",
         "usersPath": "/73/users",
         "rolesPath": "/74/roles",
+        "credsPath": "/75/Creds",
+        "targetsPath": "/91/Targets",
         "registryPath": "/registry"
     }
 }

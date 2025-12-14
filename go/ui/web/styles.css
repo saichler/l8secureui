@@ -7,10 +7,14 @@
     --status-offline: #757575;
 }
 
-* {
+*, html {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    height: 100%;
 }
 
 body {
@@ -20,13 +24,18 @@ body {
     color: #2d3748;
     line-height: 1.6;
     font-size: 14px;
-    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
     padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* App Header */
@@ -102,16 +111,18 @@ body {
 /* Tab Content */
 .tab-content {
     display: none;
+    flex: 1;
 }
 
 .tab-content.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Embedded App iframe */
 .embedded-app {
     width: 100%;
-    min-height: 500px;
+    flex: 1;
     border: none;
     border-radius: 16px;
     background: white;

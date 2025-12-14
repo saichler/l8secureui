@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User & Role Management</title>
+    <title>User, Role & Credentials Management</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,6 +12,8 @@
             <nav class="tabs">
                 <button class="tab-btn active" data-tab="users">Users</button>
                 <button class="tab-btn" data-tab="roles">Roles</button>
+                <button class="tab-btn" data-tab="credentials">Credentials</button>
+                <button class="tab-btn" data-tab="targets">Targets</button>
             </nav>
             <button class="btn btn-logout" onclick="logout()">Logout</button>
         </header>
@@ -24,6 +26,16 @@
         <!-- Roles Tab (embedded app) -->
         <section id="roles" class="tab-content">
             <iframe id="roles-iframe" src="roles/index.html" class="embedded-app"></iframe>
+        </section>
+
+        <!-- Credentials Tab (embedded app) -->
+        <section id="credentials" class="tab-content">
+            <iframe id="credentials-iframe" src="credentials/index.html" class="embedded-app"></iframe>
+        </section>
+
+        <!-- Targets Tab (embedded app) -->
+        <section id="targets" class="tab-content">
+            <iframe id="targets-iframe" src="targets/index.html" class="embedded-app"></iframe>
         </section>
     </div>
 
